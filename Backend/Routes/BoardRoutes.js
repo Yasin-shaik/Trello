@@ -5,18 +5,20 @@ const {
     getBoard, 
     updateBoard, 
     deleteBoard, 
-    inviteMember 
+    inviteMember,
+    getBoardActivity,
+    searchBoardCards
 } = require('../Controllers/BoardController');
 const { protect } = require('../Middleware/AuthMiddleware');
 
 const router = express.Router();
 
-router.use(protect);
-router.post('/', createBoard);
-router.get('/', listBoards);
-router.get('/:id', getBoard);
-router.put('/:id', updateBoard);
-router.delete('/:id', deleteBoard);
+router.use(protect); 
+
 router.post('/invite', inviteMember);
+router.get('/:id/search', searchBoardCards); 
+router.get('/:id/activity', getBoardActivity); 
+router.route('/').post(createBoard).get(listBoards);
+router.route('/:id').get(getBoard).put(updateBoard).delete(deleteBoard);
 
 module.exports = router;
