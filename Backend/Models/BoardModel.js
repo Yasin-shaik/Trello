@@ -7,6 +7,11 @@ const BoardSchema = new mongoose.Schema({
         trim: true,
         maxlength: [100, 'Title cannot be more than 100 characters']
     },
+    owner: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+        required: [true, 'A board must have an owner.']
+    },
     visibility: {
         type: String,
         enum: ['private', 'workspace', 'public'], // Common Trello visibility options

@@ -1,6 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const authRoutes = require('./Routes/AuthRoutes'); 
+const workspaceRoutes = require('./Routes/WorkspaceRoutes');
+const boardRoutes = require('./Routes/BoardRoutes');
+const listRoutes = require('./Routes/ListRoutes');
+const cardRoutes = require('./Routes/CardRoutes');
 
 dotenv.config();
 
@@ -18,6 +23,12 @@ app.get("/", (req, res) => {
     port: PORT,
   });
 });
+
+app.use('/api/auth', authRoutes);
+app.use('/api/workspaces', workspaceRoutes);
+app.use('/api/boards', boardRoutes);
+app.use('/api/lists', listRoutes);
+app.use('/api/cards', cardRoutes);
 
 const connectDBAndStartServer = async () => {
   try {
