@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const http = require('http');
+const { initSocket } = require('./socket');
 const authRoutes = require('./Routes/AuthRoutes'); 
 const workspaceRoutes = require('./Routes/WorkspaceRoutes');
 const boardRoutes = require('./Routes/BoardRoutes');
@@ -13,6 +15,25 @@ const MONGO_URI = process.env.MONGO_URI;
 const PORT = process.env.PORT;
 
 const app = express();
+const server = http.createServer(app); 
+const io = initSocket(server); 
+
+io.on('connection', (socket) => {
+    console.log(`[Socket.io] User connected: ${socket.id}`);
+    socket.on('joinBoard', (boardId) => {
+        Object.keys(socket.rooms).forEach(room => {
+            if (room !== socket.id) {
+                socket.leave(room);
+            }
+        });
+        socket.join(boardId);
+        console.log(`[Socket.io] User ${socket.id} joined board room: ${boardId}`);
+    });
+    socket.on('disconnect', () => {
+        console.log(`[Socket.io] User disconnected: ${socket.id}`);
+    });
+});
+
 app.use(express.json());
 
 app.get("/", (req, res) => {
