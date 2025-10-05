@@ -36,6 +36,34 @@ This repository contains a full-stack implementation of a simplified Trello-like
 
 ---
 
+## 📸 Application Screenshots
+
+These images demonstrate the key user flows and interface design of the application.
+
+### 1. Public Landing Page
+The entry point showing branding and navigation options (Login/Register) in the top right.
+![Landing Page with Auth Options](./OutputScreenshots/LandingPage.png)
+
+### 2. User Authentication (Sign In & Sign Up)
+The dedicated forms used for accessing the application.
+
+| Sign In Page | Sign Up Page |
+| :--- | :--- |
+| ![Sign In Page Screenshot](./OutputScreenshots/LoginPage.png) | ![Sign Up Page Screenshot](./OutputScreenshots/RegisterPage.png) |
+
+### 3. Workspaces Dashboard
+The authenticated main view where users can see all their workspaces and create new ones.
+
+![Workspaces List Page](./OutputScreenshots/WorkspacesPage.png)
+
+### 4. Kanban Board View
+The core working area, showing the fixed sidebar, header, horizontal lists, and cards.
+
+![Main Kanban Board Interface](./OutputScreenshots/BoardsPage.png)
+
+
+---
+
 ## ⚙️ Local Setup and Run Steps
 
 These instructions assume you have Node.js (v16+) and a running MongoDB instance (local or Atlas) available. The full setup should take less than 15 minutes.
