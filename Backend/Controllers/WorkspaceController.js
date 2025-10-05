@@ -2,7 +2,7 @@ const Workspace = require("../Models/WorkSpaceModel");
 const User = require("../Models/UserModel");
 
 const createWorkspace = async (req, res) => {
-  const { name } = req.body;
+  const { name, type } = req.body;
   if (!name) {
     return res
       .status(400)
@@ -14,6 +14,7 @@ const createWorkspace = async (req, res) => {
       name,
       owner: userId,
       members: [userId],
+      type: type ? type : private
     });
     res.status(201).json({
       message: "Workspace created successfully.",
@@ -30,7 +31,7 @@ const listWorkspaces = async (req, res) => {
     const userId = req.user._id;
     const workspaces = await Workspace.find({
       $or: [{ owner: userId }, { members: userId }],
-    }).select("-members");
+    });
     res.status(200).json(workspaces);
   } catch (error) {
     console.error("Error listing workspaces:", error);

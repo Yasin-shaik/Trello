@@ -6,6 +6,26 @@ const Comment = require('../Models/CommentModel');
 const mongoose = require('mongoose');
 const { getIo } = require('../socket');
 
+const checkBoardMembership = async (boardId, userId) => {
+    if (!mongoose.Types.ObjectId.isValid(boardId) || !mongoose.Types.ObjectId.isValid(userId)) {
+        return { isMember: false, message: 'Invalid ID format provided.' };
+    }
+    try {
+        const board = await Board.findById(boardId).select('members');
+        if (!board) {
+            return { isMember: false, message: 'Board not found.' };
+        }
+        const isMember = board.members.some(memberId => memberId.equals(userId));
+        if (!isMember) {
+            return { isMember: false, message: 'Authorization failed. User is not a member of this board.' };
+        }
+        return { isMember: true, message: 'Membership verified.' };
+    } catch (error) {
+        console.error('Error in checkBoardMembership:', error.message);
+        return { isMember: false, message: 'Server error during membership verification.' };
+    }
+};
+
 const checkCardAccess = async (cardId, userId) => {
     try {
         const card = await Card.findById(cardId).select('listId');

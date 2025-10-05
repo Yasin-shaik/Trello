@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const http = require('http');
+const cors = require('cors');
 const { initSocket } = require('./socket');
 const authRoutes = require('./Routes/AuthRoutes'); 
 const workspaceRoutes = require('./Routes/WorkspaceRoutes');
@@ -35,6 +36,7 @@ io.on('connection', (socket) => {
 });
 
 app.use(express.json());
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.status(200).json({
@@ -56,7 +58,7 @@ const connectDBAndStartServer = async () => {
     await mongoose.connect(MONGO_URI);
     console.log("✅ MongoDB connected successfully!");
 
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
       console.log(`🚀 Server is running on port ${PORT}`);
       console.log(`(Access via http://localhost:${PORT})`);
     });
