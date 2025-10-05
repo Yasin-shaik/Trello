@@ -48,7 +48,7 @@ const checkCardAccess = async (cardId, userId) => {
 
 const createCard = async (req, res) => {
     const userId = req.user._id;
-    const { title, listId, position } = req.body;
+    const { title, description, listId, position, labels } = req.body;
     if (!title || !listId) {
         return res.status(400).json({ message: 'Title and listId are required.' });
     }
@@ -66,7 +66,9 @@ const createCard = async (req, res) => {
         const newCard = await Card.create({
             title,
             listId,
+            description,
             position: position || Date.now(),
+            labels,
             assignees: [userId]
         });
         res.status(201).json(newCard);
