@@ -18,11 +18,11 @@ The Mini-Trello application follows a **Monolithic Architecture** with a clear s
 
 ```mermaid
 graph TD
-    UserClient[User's Browser/Client] --> |HTTP/S Requests| Frontend(React App)
+    UserClient[User's Browser/Client] --> |HTTP/S Requests| Frontend[React App]
     Frontend --> |REST API Calls| BackendAPI[Backend API (Express.js)]
     Frontend -- |WebSocket Connection| WebSocketServer[WebSocket Server (Socket.io)]
 
-    BackendAPI -- |Database Operations| MongoDB[(MongoDB Atlas/Local)]
+    BackendAPI -- |Database Operations| MongoDB[MongoDB (Atlas/Local)]
     WebSocketServer -- |Database Operations (optional, via API)| MongoDB
 
     BackendAPI --> |Emits Events| WebSocketServer
