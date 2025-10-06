@@ -16,24 +16,6 @@ This document provides a high-level overview of the Mini-Trello application's ar
 
 The Mini-Trello application follows a **Monolithic Architecture** with a clear separation of concerns between Frontend, Backend API, and a Real-time (WebSocket) layer.
 
-```mermaid
-graph TD
-    A[User's Browser/Client] --> B(React App)
-    B --> C{Backend API (Express.js)}
-    B -- WebSocket Connection --> D[WebSocket Server (Socket.io)]
-
-    C -- Database Operations --> E(MongoDB Atlas/Local)
-    D -- Optional DB Ops (via API) --> E
-
-    C --> |Emits Events| D
-    D --> |Broadcasts Events| B
-
-    subgraph Backend
-        C
-        D
-    end
-```
-
 **Key Architectural Decisions:**
 
   * **MERN Stack:** Chosen for its JavaScript-centric ecosystem, simplifying full-stack development.
